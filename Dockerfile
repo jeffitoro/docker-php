@@ -41,7 +41,7 @@ RUN pecl install \
 RUN docker-php-ext-enable \
     imagick \
     xdebug
-RUN docker-php-ext-configure zip --with-libzip
+# RUN docker-php-ext-configure zip --with-libzip
 
 RUN docker-php-ext-install \
     calendar \
@@ -72,6 +72,8 @@ RUN composer global require "squizlabs/php_codesniffer=*"
 RUN apk del -f .build-deps
 
 RUN mkdir /code
+
+ADD config/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
 # RUN composer create-project laravel/laravel code
 
