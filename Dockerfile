@@ -71,7 +71,7 @@ RUN composer global require "squizlabs/php_codesniffer=*"
 # Cleanup dev dependencies
 RUN apk del -f .build-deps
 
-RUN mkdir /code
+RUN mkdir /code && chown -R www-data:www-data /code
 
 ADD config/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
 
