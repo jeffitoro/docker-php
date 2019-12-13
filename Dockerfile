@@ -1,5 +1,6 @@
-FROM php:7.4.0-fpm-alpine
+FROM php:7.3-fpm-alpine
 
+# Install dev dependencies
 RUN apk add --no-cache --virtual .build-deps \
     $PHPIZE_DEPS \
     curl-dev \
@@ -7,8 +8,7 @@ RUN apk add --no-cache --virtual .build-deps \
     libtool \
     libxml2-dev \
     postgresql-dev \
-    sqlite-dev \
-    oniguruma-dev
+    sqlite-dev
 
 # Install production dependencies
 RUN apk add --no-cache \
@@ -29,8 +29,7 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     zlib-dev \
-    libzip-dev \
-    cairo-dev
+    libzip-dev
 
 # Install PECL and PEAR extensions
 RUN pecl install \
@@ -41,25 +40,24 @@ RUN pecl install \
 RUN docker-php-ext-enable \
     imagick \
     xdebug
-# RUN docker-php-ext-configure zip --with-libzip
-
+RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install \
     calendar \
     curl \
     exif \
     iconv \
-    # pdo \
+    mbstring \
+    pdo \
     pdo_mysql \
-    # mbstring \
     pdo_pgsql \
     pdo_sqlite \
     pcntl \
     tokenizer \
-    # xml \
+    xml \
     gd \
     zip \
     bcmath
-
+    
 # Install composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
